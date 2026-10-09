@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AGOL Worldwide — Digital research and website direction by Rocket Pine" />
+  <title>AGOL Worldwide — Research & Website Direction V4 · Rocket Pine</title>
+  <style>
+    :root {
+      --bg: #f0efe9;
+      --surface: #e7e5de;
+      --ink: #121212;
+      --muted: #6f6c66;
+      --line: rgba(18, 18, 18, .16);
+      --line-strong: rgba(18, 18, 18, .35);
+      --acid: #d8ff48;
+      --dark: #11110f;
+      --dark-2: #1c1c18;
+      --white: #f7f6f1;
+      --max: 1440px;
+      --pad: clamp(20px, 4vw, 64px);
+      --radius: 0px;
+      --ease: cubic-bezier(.2,.75,.25,1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    ::selection { background: var(--acid); color: var(--ink); }
+
+    .page-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--acid);
+      z-index: 1000;
+      transition: width .08s linear;
+    }
+
+    .shell { width: min(100%, var(--max)); margin: 0 auto; padding-inline: var(--pad); }
+
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      mix-blend-mode: difference;
+      color: #fff;
+      pointer-events: none;
+    }
+
+    .nav {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      padding: 20px var(--pad);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      pointer-events: auto;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: -.045em;
+      font-size: 1.08rem;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      opacity: .72;
+    }
+
+    .nav-right { justify-self: end; font-size: .78rem; text-transform: uppercase; letter-spacing: .09em; }
+
+    .hero {
+      min-height: 100svh;
+      background: var(--dark);
+      color: var(--white);
+      position: relative;
+      display: flex;
+      align-items: end;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 0 49.96%, rgba(255,255,255,.08) 50%, transparent 50.04%),
+        linear-gradient(180deg, transparent 0 49.96%, rgba(255,255,255,.06) 50%, transparent 50.04%);
+      pointer-events: none;
+    }
+
+    .hero-mark {
+      position: absolute;
+      top: 14%;
+      right: -5%;
+      font-size: clamp(180px, 34vw, 520px);
+      line-height: .75;
+      letter-spacing: -.09em;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,.12);
+      user-select: none;
+      transform: rotate(-4deg);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding-top: 150px;
+      padding-bottom: clamp(40px, 6vw, 82px);
+    }
+
+    .eyebrow {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-size: .73rem;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+    .hero .eyebrow { color: rgba(255,255,255,.55); }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 1180px;
+      font-size: clamp(3.6rem, 9.4vw, 10rem);
+      line-height: .86;
+      letter-spacing: -.065em;
+      font-weight: 700;
+    }
+
+    .hero h1 .outline {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(247,246,241,.72);
+    }
+
+    .hero-bottom {
+      margin-top: clamp(44px, 7vw, 90px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+      border-top: 1px solid rgba(255,255,255,.18);
+      padding-top: 26px;
+    }
+
+    .hero-copy { max-width: 610px; font-size: clamp(1rem, 1.45vw, 1.35rem); line-height: 1.5; color: rgba(255,255,255,.76); }
+    .hero-meta { justify-self: end; text-align: right; font-size: .75rem; line-height: 1.7; text-transform: uppercase; letter-spacing: .1em; color: rgba(255,255,255,.5); }
+
+    .scroll-cue {
+      position: absolute;
+      left: var(--pad);
+      bottom: 18px;
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      color: rgba(255,255,255,.42);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    section { position: relative; }
+
+    .section {
+      padding: clamp(84px, 10vw, 160px) 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: clamp(36px, 8vw, 120px);
+      align-items: start;
+      margin-bottom: clamp(52px, 8vw, 110px);
+    }
+
+    .section-label {
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      color: var(--muted);
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(2.5rem, 5.8vw, 6.4rem);
+      line-height: .94;
+      letter-spacing: -.055em;
+      font-weight: 650;
+      max-width: 980px;
+    }
+
+    .lead {
+      font-size: clamp(1.25rem, 2vw, 1.9rem);
+      line-height: 1.35;
+      max-width: 900px;
+      letter-spacing: -.02em;
+    }
+
+    .muted { color: var(--muted); }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-strong); }
+
+    .finding {
+      padding: 28px 26px 80px 0;
+      border-right: 1px solid var(--line);
+      min-height: 320px;
+    }
+    .finding + .finding { padding-left: 26px; }
+    .finding:last-child { border-right: 0; }
+    .finding .num { font-size: .72rem; letter-spacing: .11em; margin-bottom: 90px; color: var(--muted); }
+    .finding h3 { margin: 0 0 14px; font-size: clamp(1.35rem, 2vw, 2rem); letter-spacing: -.03em; }
+    .finding p { margin: 0; color: var(--muted); line-height: 1.55; max-width: 360px; }
+
+    .quote-band {
+      background: var(--acid);
+      color: var(--ink);
+      padding: clamp(60px, 8vw, 120px) 0;
+      overflow: hidden;
+    }
+    .quote-band p {
+      margin: 0;
+      font-size: clamp(2.8rem, 6.8vw, 7.8rem);
+      line-height: .92;
+      letter-spacing: -.06em;
+      font-weight: 650;
+      max-width: 1250px;
+    }
+
+    .journey {
+      background: var(--dark);
+      color: var(--white);
+    }
+    .journey .section-label, .journey .muted { color: rgba(255,255,255,.48); }
+    .journey .section-head { margin-bottom: 70px; }
+
+    .journey-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(255,255,255,.2); }
+    .step { padding: 26px 28px 70px 0; border-right: 1px solid rgba(255,255,255,.14); min-height: 390px; display: flex; flex-direction: column; }
+    .step + .step { padding-left: 28px; }
+    .step:last-child { border-right: 0; }
+    .step-no { font-size: .74rem; letter-spacing: .12em; color: rgba(255,255,255,.45); }
+    .step h3 { margin: auto 0 18px; font-size: clamp(1.7rem, 2.6vw, 2.8rem); letter-spacing: -.04em; }
+    .step p { margin: 0; color: rgba(255,255,255,.58); line-height: 1.5; }
+
+    .strategy-note { margin-top: 38px; display: grid; grid-template-columns: 1fr 2fr; gap: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.14); }
+    .strategy-note strong { color: var(--acid); font-size: .73rem; text-transform: uppercase; letter-spacing: .12em; }
+    .strategy-note p { margin: 0; max-width: 800px; font-size: 1.15rem; line-height: 1.55; color: rgba(255,255,255,.72); }
+
+    .seo-topline { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: end; margin-bottom: 60px; }
+    .seo-topline .lead { margin: 0; }
+    .data-note { font-size: .78rem; color: var(--muted); line-height: 1.6; max-width: 520px; justify-self: end; }
+
+    .keyword-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line); }
+    .keyword-card { padding: 26px 26px 34px 0; min-height: 270px; border-right: 1px solid var(--line); position: relative; }
+    .keyword-card:nth-child(4n+2), .keyword-card:nth-child(4n+3), .keyword-card:nth-child(4n+4) { padding-left: 26px; }
+    .keyword-card:nth-child(4n) { border-right: 0; }
+    .keyword-card:nth-child(n+5) { border-top: 1px solid var(--line); }
+    .keyword-card .vol { font-size: clamp(3rem, 5vw, 5.2rem); letter-spacing: -.06em; line-height: .95; }
+    .keyword-card .unit { font-size: .72rem; text-transform: uppercase; letter-spacing: .11em; color: var(--muted); margin-top: 6px; }
+    .keyword-card h4 { margin: 78px 0 0; font-size: 1rem; font-weight: 500; }
+    .keyword-card .priority { position: absolute; top: 25px; right: 22px; font-size: .66rem; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); }
+    .keyword-card.highlight { background: var(--acid); padding-left: 26px; }
+    .keyword-card.highlight .unit, .keyword-card.highlight .priority { color: rgba(0,0,0,.55); }
+
+    .callout { margin-top: 28px; display: grid; grid-template-columns: 1fr 2fr; gap: 40px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .callout b { font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; }
+    .callout p { margin: 0; color: var(--muted); line-height: 1.6; max-width: 850px; }
+
+    .architecture { background: var(--surface); }
+    .sitemap-wrap { margin-top: 20px; display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .sitemap-root {
+      width: fit-content;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--white);
+      padding: 18px 24px;
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      margin: 0 auto 44px;
+    }
+    .sitemap-level { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+    .sitemap-level::before { content:""; position:absolute; top:-22px; left:10%; right:10%; height:1px; background:var(--line-strong); }
+    .sitemap-card { border-top: 1px solid var(--ink); padding-top: 15px; min-height: 210px; }
+    .sitemap-card h4 { margin: 0 0 18px; font-size: 1rem; }
+    .sitemap-card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .sitemap-card li { color: var(--muted); font-size: .86rem; line-height: 1.35; }
+    .sitemap-card .future { color: var(--ink); }
+    .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--acid); margin-right: 7px; transform: translateY(-1px); border: 1px solid var(--ink); }
+
+    .conversion { background: var(--dark); color: var(--white); }
+    .conversion .section-label { color: rgba(255,255,255,.48); }
+    .conversion-grid { display:grid; grid-template-columns: 1.1fr .9fr; gap: clamp(50px, 8vw, 120px); align-items:start; }
+    .conversion-principles { border-top:1px solid rgba(255,255,255,.22); }
+    .principle { display:grid; grid-template-columns: 70px 1fr; gap:18px; padding:24px 0; border-bottom:1px solid rgba(255,255,255,.14); }
+    .principle span { color:rgba(255,255,255,.38); font-size:.72rem; letter-spacing:.1em; }
+    .principle h4 { margin:0 0 8px; font-size:1.35rem; }
+    .principle p { margin:0; color:rgba(255,255,255,.55); line-height:1.5; }
+
+    .rfq-mock { border:1px solid rgba(255,255,255,.28); padding:28px; position:sticky; top:100px; }
+    .rfq-top { display:flex; justify-content:space-between; font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; color:rgba(255,255,255,.45); margin-bottom:56px; }
+    .rfq-mock h3 { font-size:clamp(2rem,3vw,3.6rem); line-height:.95; letter-spacing:-.045em; margin:0 0 36px; }
+    .form-line { display:grid; grid-template-columns:1fr auto; align-items:center; border-bottom:1px solid rgba(255,255,255,.22); padding:15px 0; color:rgba(255,255,255,.55); font-size:.85rem; }
+    .form-line i { font-style:normal; color:var(--white); font-size:.7rem; }
+    .rfq-btn { margin-top:28px; background:var(--acid); color:var(--ink); padding:17px 20px; display:flex; align-items:center; justify-content:space-between; font-weight:650; }
+
+    .proof-grid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line-strong); }
+    .proof-item { padding:26px 28px 70px 0; border-right:1px solid var(--line); min-height:310px; }
+    .proof-item + .proof-item { padding-left:28px; }
+    .proof-item:last-child { border-right:0; }
+    .proof-item .tag { font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); }
+    .proof-item h3 { margin:110px 0 12px; font-size:clamp(1.6rem,2.4vw,2.6rem); letter-spacing:-.04em; }
+    .proof-item p { margin:0; color:var(--muted); line-height:1.55; }
+
+    .direction { padding-bottom: 0; }
+    .direction-board { margin-top:60px; display:grid; grid-template-columns:2fr 1fr; min-height:620px; border-top:1px solid var(--ink); border-bottom:1px solid var(--ink); }
+    .direction-main { background:var(--dark); color:var(--white); padding:clamp(35px,5vw,70px); position:relative; overflow:hidden; }
+    .direction-main h3 { margin:0; font-size:clamp(3.5rem,7vw,8rem); line-height:.86; letter-spacing:-.065em; max-width:800px; position:relative; z-index:2; }
+    .direction-main .big-letter { position:absolute; right:-20px; bottom:-100px; font-size:520px; line-height:.75; font-weight:800; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.13); }
+    .direction-side { display:grid; grid-template-rows:1fr 1fr; }
+    .direction-cell { padding:30px; border-left:1px solid var(--ink); display:flex; flex-direction:column; justify-content:space-between; }
+    .direction-cell + .direction-cell { border-top:1px solid var(--ink); }
+    .direction-cell .small { font-size:.67rem; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); }
+    .direction-cell strong { font-size:clamp(1.7rem,2.6vw,3rem); line-height:1; letter-spacing:-.04em; }
+    .direction-cell.acid { background:var(--acid); }
+
+    .roadmap { background:var(--surface); }
+    .roadmap-list { border-top:1px solid var(--line-strong); }
+    .phase { display:grid; grid-template-columns:90px 1.1fr 1fr; gap:30px; padding:28px 0; border-bottom:1px solid var(--line); align-items:start; }
+    .phase .n { font-size:.72rem; letter-spacing:.1em; color:var(--muted); }
+    .phase h3 { margin:0; font-size:clamp(1.7rem,2.6vw,2.7rem); letter-spacing:-.04em; }
+    .phase p { margin:0; color:var(--muted); line-height:1.55; }
+
+    .final {
+      min-height: 94svh;
+      background: var(--acid);
+      color: var(--ink);
+      display: flex;
+      align-items: end;
+      overflow: hidden;
+    }
+    .final-inner { padding-top:120px; padding-bottom:50px; width:100%; position:relative; }
+    .final .section-label { color:rgba(0,0,0,.55); margin-bottom:38px; }
+    .final h2 { margin:0; max-width:1240px; font-size:clamp(4rem,9vw,10rem); line-height:.84; letter-spacing:-.07em; font-weight:680; }
+    .final-bottom { margin-top:80px; padding-top:24px; border-top:1px solid rgba(0,0,0,.35); display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+    .final-bottom p { margin:0; max-width:620px; font-size:1.05rem; line-height:1.55; }
+    .final-bottom .sig { justify-self:end; text-align:right; font-size:.75rem; line-height:1.65; text-transform:uppercase; letter-spacing:.1em; }
+
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .75s var(--ease), transform .75s var(--ease); }
+    .reveal.is-visible { opacity:1; transform:translateY(0); }
+
+
+
+    /* V3 — research extensions */
+    .competitive { background: var(--white); }
+    .benchmark-note {
+      margin-top:-48px;
+      margin-bottom:42px;
+      font-size:.7rem;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      color:var(--muted);
+    }
+    .competitor-grid {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      border-top:1px solid var(--ink);
+      border-bottom:1px solid var(--ink);
+    }
+    .competitor-card {
+      min-height:300px;
+      padding:24px 24px 30px 0;
+      border-right:1px solid var(--line);
+      display:flex;
+      flex-direction:column;
+    }
+    .competitor-card + .competitor-card { padding-left:24px; }
+    .competitor-card:last-child { border-right:0; }
+    .competitor-card small {
+      font-size:.66rem;
+      text-transform:uppercase;
+      letter-spacing:.11em;
+      color:var(--muted);
+    }
+    .competitor-card h3 {
+      margin:auto 0 12px;
+      font-size:clamp(1.8rem,3vw,3.2rem);
+      line-height:.95;
+      letter-spacing:-.045em;
+    }
+    .competitor-card p { margin:0; color:var(--muted); line-height:1.5; }
+    .market-gap {
+      margin-top:34px;
+      display:grid;
+      grid-template-columns:1fr 2fr;
+      gap:34px;
+      padding-top:22px;
+      border-top:1px solid var(--line-strong);
+      align-items:start;
+    }
+    .market-gap b {
+      font-size:.72rem;
+      text-transform:uppercase;
+      letter-spacing:.11em;
+    }
+    .market-gap p {
+      margin:0;
+      max-width:850px;
+      font-size:clamp(1.45rem,2.4vw,2.4rem);
+      line-height:1.24;
+      letter-spacing:-.03em;
+    }
+
+    .buyer-journey { background:var(--dark); color:var(--white); }
+    .buyer-journey .section-label,
+    .buyer-journey .muted { color:rgba(255,255,255,.5); }
+    .journey-grid-v3 {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      border-top:1px solid rgba(255,255,255,.28);
+      border-bottom:1px solid rgba(255,255,255,.28);
+    }
+    .journey-path-v3 {
+      min-height:430px;
+      padding:30px clamp(26px,4vw,58px) 34px 0;
+      display:flex;
+      flex-direction:column;
+      gap:28px;
+    }
+    .journey-path-v3 + .journey-path-v3 {
+      border-left:1px solid rgba(255,255,255,.2);
+      padding-left:clamp(26px,4vw,58px);
+    }
+    .journey-path-v3 .type {
+      font-size:.7rem;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:rgba(255,255,255,.48);
+    }
+    .journey-path-v3 h3 {
+      margin:0;
+      font-size:clamp(2.4rem,4.2vw,4.7rem);
+      line-height:.92;
+      letter-spacing:-.05em;
+      font-weight:620;
+    }
+    .journey-steps-v3 {
+      margin-top:auto;
+      display:grid;
+      gap:12px;
+    }
+    .journey-step-v3 {
+      display:grid;
+      grid-template-columns:34px 1fr;
+      gap:14px;
+      align-items:center;
+      padding-top:12px;
+      border-top:1px solid rgba(255,255,255,.14);
+    }
+    .journey-step-v3 span:first-child { color:var(--acid); font-size:.7rem; }
+    .journey-step-v3 span:last-child { color:rgba(255,255,255,.72); }
+
+    .buyer-answers { background:var(--bg); }
+    .answer-table { border-top:1px solid var(--ink); }
+    .answer-row {
+      display:grid;
+      grid-template-columns:.9fr 1.35fr;
+      gap:34px;
+      padding:25px 0;
+      border-bottom:1px solid var(--line);
+      align-items:start;
+    }
+    .answer-row .question {
+      font-size:clamp(1.25rem,2vw,1.9rem);
+      line-height:1.22;
+      letter-spacing:-.025em;
+    }
+    .answer-row .answer { color:var(--muted); line-height:1.55; font-size:1rem; }
+    .answer-row .answer b { color:var(--ink); font-weight:650; }
+
+    .final-questions { background:var(--acid); }
+    .final-questions .section-label { color:rgba(0,0,0,.55); }
+    .final-questions .section-title { max-width:1050px; }
+    .question-list-v3 { border-top:1px solid rgba(0,0,0,.65); }
+    .question-v3 {
+      display:grid;
+      grid-template-columns:70px 1fr;
+      gap:24px;
+      padding:24px 0;
+      border-bottom:1px solid rgba(0,0,0,.22);
+      align-items:start;
+    }
+    .question-v3 .qno {
+      font-size:.7rem;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      color:rgba(0,0,0,.55);
+      padding-top:5px;
+    }
+    .question-v3 p {
+      margin:0;
+      max-width:960px;
+      font-size:clamp(1.3rem,2.35vw,2.25rem);
+      line-height:1.2;
+      letter-spacing:-.025em;
+    }
+
+    @media (max-width:980px) {
+      .competitor-grid { grid-template-columns:1fr 1fr; }
+      .competitor-card:nth-child(2) { border-right:0; }
+      .competitor-card:nth-child(3), .competitor-card:nth-child(4) { border-top:1px solid var(--line); }
+      .competitor-card:nth-child(3) { padding-left:0; }
+      .market-gap { grid-template-columns:1fr; }
+      .journey-grid-v3 { grid-template-columns:1fr; }
+      .journey-path-v3 + .journey-path-v3 { border-left:0; border-top:1px solid rgba(255,255,255,.2); padding-left:0; }
+      .answer-row { grid-template-columns:1fr; gap:10px; }
+    }
+
+    @media (max-width:640px) {
+      .competitor-grid { grid-template-columns:1fr; }
+      .competitor-card,
+      .competitor-card + .competitor-card,
+      .competitor-card:nth-child(3) { padding:24px 0 30px; border-right:0; border-top:1px solid var(--line); }
+      .competitor-card:first-child { border-top:0; }
+      .question-v3 { grid-template-columns:44px 1fr; }
+    }
+
+    @media (max-width: 980px) {
+      .nav { grid-template-columns:1fr auto; }
+      .nav-center { display:none; }
+      .section-head { grid-template-columns:1fr; gap:22px; }
+      .hero-bottom, .seo-topline, .strategy-note, .callout, .conversion-grid, .final-bottom { grid-template-columns:1fr; }
+      .hero-meta, .data-note, .final-bottom .sig { justify-self:start; text-align:left; }
+      .grid-3, .proof-grid { grid-template-columns:1fr; border-top:0; }
+      .finding, .proof-item, .finding + .finding, .proof-item + .proof-item { padding:28px 0 55px; border-right:0; border-top:1px solid var(--line); min-height:auto; }
+      .finding .num { margin-bottom:55px; }
+      .journey-grid { grid-template-columns:1fr 1fr; }
+      .step:nth-child(2) { border-right:0; }
+      .step:nth-child(n+3) { border-top:1px solid rgba(255,255,255,.14); }
+      .keyword-grid { grid-template-columns:1fr 1fr; }
+      .keyword-card:nth-child(odd), .keyword-card:nth-child(even) { padding:24px; border-right:1px solid var(--line); border-top:1px solid var(--line); }
+      .keyword-card:nth-child(2n) { border-right:0; }
+      .sitemap-level { grid-template-columns:1fr 1fr; }
+      .sitemap-level::before { display:none; }
+      .direction-board { grid-template-columns:1fr; }
+      .direction-side { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+      .direction-cell { border-left:0; border-top:1px solid var(--ink); min-height:220px; }
+      .direction-cell + .direction-cell { border-left:1px solid var(--ink); }
+      .phase { grid-template-columns:70px 1fr; }
+      .phase p { grid-column:2; }
+    }
+
+    @media (max-width: 640px) {
+      :root { --pad: 18px; }
+      .nav-right { display:none; }
+      .nav { grid-template-columns:1fr; }
+      .hero { min-height: 92svh; }
+      .hero h1 { font-size:clamp(3.1rem,16vw,5.3rem); }
+      .hero-bottom { margin-top:46px; }
+      .scroll-cue { display:none; }
+      .journey-grid, .keyword-grid, .sitemap-level, .direction-side { grid-template-columns:1fr; }
+      .step, .step + .step { padding:26px 0 48px; border-right:0; border-top:1px solid rgba(255,255,255,.14); min-height:300px; }
+      .step h3 { margin-top:110px; }
+      .keyword-card:nth-child(odd), .keyword-card:nth-child(even) { border-right:0; min-height:220px; }
+      .keyword-card h4 { margin-top:55px; }
+      .direction-main { min-height:450px; }
+      .direction-cell + .direction-cell { border-left:0; }
+      .phase { grid-template-columns:1fr; gap:10px; }
+      .phase p { grid-column:1; }
+      .rfq-mock { position:relative; top:0; }
+    }
+
+
+    .objective-intro {
+      display:grid;
+      grid-template-columns: .78fr 1.22fr;
+      gap: clamp(38px, 8vw, 120px);
+      align-items:start;
+      margin-bottom: clamp(50px, 8vw, 100px);
+    }
+    .objective-intro .lead { margin:0; }
+    .objective-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      border-top:1px solid var(--ink);
+      border-bottom:1px solid var(--ink);
+    }
+    .objective-card {
+      min-height:520px;
+      padding:30px clamp(24px, 4vw, 58px) 40px 0;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+    }
+    .objective-card + .objective-card {
+      border-left:1px solid var(--ink);
+      padding-left:clamp(24px, 4vw, 58px);
+    }
+    .objective-card .objective-no {
+      font-size:.72rem;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color:var(--muted);
+    }
+    .objective-card h3 {
+      margin:auto 0 20px;
+      font-size:clamp(3.4rem, 7vw, 7.6rem);
+      line-height:.84;
+      letter-spacing:-.065em;
+      font-weight:650;
+    }
+    .objective-card p {
+      margin:0;
+      max-width:540px;
+      font-size:1.08rem;
+      line-height:1.55;
+      color:var(--muted);
+    }
+    .objective-card.acid { background:var(--acid); padding-right:clamp(24px, 4vw, 58px); }
+    .objective-card.acid .objective-no,
+    .objective-card.acid p { color:rgba(0,0,0,.58); }
+
+    .research-path {
+      margin-top:34px;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:18px;
+      font-size:.73rem;
+      text-transform:uppercase;
+      letter-spacing:.11em;
+      color:var(--muted);
+    }
+    .research-path .path-line { height:1px; background:var(--line-strong); }
+
+    .concept-map {
+      margin-top:18px;
+      padding:24px 0 6px;
+    }
+    .map-row {
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      position:relative;
+      flex-wrap:wrap;
+    }
+    .map-row + .map-row { margin-top:42px; }
+    .map-row.level-2::before,
+    .map-row.level-3::before {
+      content:"";
+      position:absolute;
+      top:-22px;
+      left:12%;
+      right:12%;
+      height:1px;
+      background:var(--line-strong);
+    }
+    .map-node {
+      min-width:170px;
+      max-width:245px;
+      padding:16px 18px;
+      border:1px solid var(--ink);
+      background:var(--bg);
+      font-size:.78rem;
+      text-transform:uppercase;
+      letter-spacing:.09em;
+      text-align:center;
+      line-height:1.35;
+    }
+    .map-node.root { background:var(--ink); color:var(--white); min-width:240px; }
+    .map-node.primary { background:var(--white); }
+    .map-node.accent { background:var(--acid); }
+    .map-branches {
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:34px;
+    }
+    .map-branch { border-top:1px solid var(--ink); padding-top:14px; }
+    .map-branch h4 { margin:0 0 12px; font-size:.85rem; text-transform:uppercase; letter-spacing:.08em; }
+    .map-branch ul { list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+    .map-branch li { font-size:.86rem; color:var(--muted); }
+    .map-footer {
+      margin-top:30px;
+      padding-top:18px;
+      border-top:1px solid var(--line);
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .map-footer span {
+      border:1px solid var(--line-strong);
+      padding:9px 11px;
+      font-size:.68rem;
+      text-transform:uppercase;
+      letter-spacing:.09em;
+    }
+
+    .homepage {
+      background:var(--dark);
+      color:var(--white);
+    }
+    .homepage .section-label,
+    .homepage .muted { color:rgba(255,255,255,.48); }
+    .browser {
+      border:1px solid rgba(255,255,255,.22);
+      background:#f4f3ed;
+      color:var(--ink);
+      box-shadow:0 24px 80px rgba(0,0,0,.22);
+    }
+    .browser-bar {
+      height:48px;
+      border-bottom:1px solid rgba(18,18,18,.15);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px;
+      font-size:.64rem;
+      text-transform:uppercase;
+      letter-spacing:.1em;
+      color:var(--muted);
+    }
+    .browser-dots { display:flex; gap:6px; }
+    .browser-dots i { width:7px; height:7px; border:1px solid var(--ink); border-radius:50%; display:block; }
+    .home-nav {
+      padding:22px 26px;
+      display:flex;
+      align-items:center;
+      gap:24px;
+      border-bottom:1px solid var(--line);
+      font-size:.68rem;
+      text-transform:uppercase;
+      letter-spacing:.09em;
+    }
+    .home-nav strong { margin-right:auto; font-size:1rem; letter-spacing:-.04em; text-transform:none; }
+    .home-nav .cta { background:var(--ink); color:var(--white); padding:10px 13px; }
+    .home-hero {
+      min-height:520px;
+      padding:clamp(36px,5vw,70px);
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:40px;
+      align-items:end;
+      border-bottom:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
+    }
+    .home-hero::after {
+      content:"AGOL";
+      position:absolute;
+      right:-2%;
+      top:10%;
+      font-size:clamp(7rem,18vw,16rem);
+      font-weight:800;
+      letter-spacing:-.08em;
+      color:transparent;
+      -webkit-text-stroke:1px rgba(18,18,18,.08);
+    }
+    .home-hero-copy { position:relative; z-index:2; }
+    .home-kicker { font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; color:var(--muted); margin-bottom:24px; }
+    .home-hero h3 { margin:0; max-width:760px; font-size:clamp(3rem,6vw,6.6rem); line-height:.88; letter-spacing:-.06em; font-weight:650; }
+    .home-hero-side { position:relative; z-index:2; align-self:end; }
+    .home-hero-side p { margin:0 0 22px; font-size:1rem; line-height:1.55; color:var(--muted); max-width:420px; }
+    .home-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .home-btn { padding:12px 15px; border:1px solid var(--ink); font-size:.68rem; text-transform:uppercase; letter-spacing:.09em; }
+    .home-btn.primary { background:var(--acid); }
+    .home-trustbar { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--line); }
+    .home-trustbar span { padding:16px 18px; border-right:1px solid var(--line); font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
+    .home-trustbar span:last-child { border-right:0; }
+    .home-services { display:grid; grid-template-columns:repeat(3,1fr); border-bottom:1px solid var(--line); }
+    .home-service { padding:28px; min-height:250px; border-right:1px solid var(--line); display:flex; flex-direction:column; }
+    .home-service:last-child { border-right:0; }
+    .home-service small { font-size:.65rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); }
+    .home-service h4 { margin:auto 0 10px; font-size:clamp(1.6rem,2.5vw,2.8rem); letter-spacing:-.04em; }
+    .home-service p { margin:0; color:var(--muted); line-height:1.45; font-size:.9rem; }
+    .home-flow {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      border-bottom:1px solid var(--line);
+    }
+    .home-flow div { padding:22px; border-right:1px solid var(--line); min-height:150px; }
+    .home-flow div:last-child { border-right:0; }
+    .home-flow b { display:block; font-size:.66rem; color:var(--muted); margin-bottom:46px; }
+    .home-flow span { font-size:1.1rem; letter-spacing:-.02em; }
+    .home-end {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      min-height:260px;
+    }
+    .home-end > div { padding:28px; display:flex; flex-direction:column; justify-content:space-between; }
+    .home-end > div + div { border-left:1px solid var(--line); }
+    .home-end strong { font-size:clamp(1.7rem,3vw,3.2rem); line-height:1; letter-spacing:-.04em; }
+    .home-end p { margin:0; color:var(--muted); line-height:1.45; max-width:450px; }
+    .wireframe-note {
+      margin-top:24px;
+      font-size:.74rem;
+      line-height:1.55;
+      color:rgba(255,255,255,.5);
+      max-width:820px;
+    }
+
+
+    /* V4 — visual sitemap */
+    .site-map-visual {
+      margin-top: 24px;
+      padding: clamp(28px, 4vw, 54px);
+      border: 1px solid var(--ink);
+      background: rgba(255,255,255,.28);
+      overflow: hidden;
+    }
+    .site-map-home {
+      width: min(280px, 100%);
+      margin: 0 auto;
+      padding: 18px 22px;
+      background: var(--ink);
+      color: var(--white);
+      text-align: center;
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+    }
+    .site-map-arrow {
+      text-align: center;
+      font-size: 1.5rem;
+      line-height: 1;
+      padding: 14px 0;
+      color: var(--muted);
+    }
+    .site-map-main {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      position: relative;
+    }
+    .site-map-main-node {
+      min-height: 82px;
+      padding: 18px 14px;
+      border: 1px solid var(--ink);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: .72rem;
+      font-weight: 650;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .site-map-main-node.strong { background: var(--ink); color: var(--white); }
+    .site-map-main-node.acid-node { background: var(--acid); }
+    .site-map-services-label {
+      width: min(260px, 100%);
+      margin: 26px auto 16px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--ink);
+      text-align: center;
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      color: var(--muted);
+    }
+    .site-map-service-groups {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .site-map-group {
+      border: 1px solid var(--ink);
+      background: var(--bg);
+      min-height: 330px;
+    }
+    .site-map-group .group-head {
+      padding: 16px 18px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--ink);
+      font-size: .73rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      font-weight: 700;
+    }
+    .site-map-group .group-pages {
+      display: grid;
+    }
+    .site-map-group .group-pages span {
+      padding: 13px 18px;
+      border-bottom: 1px solid var(--line);
+      font-size: .86rem;
+      line-height: 1.25;
+      color: var(--muted);
+    }
+    .site-map-group .group-pages span:last-child { border-bottom: 0; }
+    .site-map-support {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line-strong);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+    .site-map-support .support-label {
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+    }
+    .site-map-support .support-pages {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .site-map-support .support-pages span {
+      border: 1px solid var(--line-strong);
+      padding: 9px 11px;
+      font-size: .67rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      background: var(--white);
+    }
+
+    /* V4 — homepage content order, not a design preview */
+    .homepage-logic {
+      border-top: 1px solid rgba(255,255,255,.24);
+    }
+    .homepage-step {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: clamp(20px, 4vw, 60px);
+      padding: clamp(26px, 4vw, 48px) 0;
+      border-bottom: 1px solid rgba(255,255,255,.18);
+      align-items: start;
+    }
+    .homepage-step .step-no {
+      font-size: .7rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: rgba(255,255,255,.44);
+      padding-top: 7px;
+    }
+    .homepage-step h3 {
+      margin: 0 0 10px;
+      font-size: clamp(1.8rem, 3.4vw, 4rem);
+      line-height: 1;
+      letter-spacing: -.04em;
+      font-weight: 600;
+    }
+    .homepage-step p {
+      margin: 0;
+      max-width: 760px;
+      color: rgba(255,255,255,.58);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+    .homepage-step.acid-step {
+      margin-top: 18px;
+      padding-inline: 22px;
+      background: var(--acid);
+      color: var(--ink);
+      border-bottom: 0;
+    }
+    .homepage-step.acid-step .step-no,
+    .homepage-step.acid-step p { color: rgba(0,0,0,.58); }
+
+    @media (max-width: 980px) {
+      .objective-intro { grid-template-columns:1fr; }
+      .objective-grid { grid-template-columns:1fr; }
+      .objective-card { min-height:390px; padding:26px 0 34px; }
+      .objective-card + .objective-card { border-left:0; border-top:1px solid var(--ink); padding-left:0; }
+      .objective-card.acid { padding-inline:24px; }
+      .research-path { grid-template-columns:1fr; }
+      .research-path .path-line { display:none; }
+      .map-branches { grid-template-columns:1fr; }
+      .site-map-main { grid-template-columns:1fr 1fr; }
+      .site-map-service-groups { grid-template-columns:1fr; }
+      .site-map-support { grid-template-columns:1fr; }
+      .home-hero { grid-template-columns:1fr; min-height:unset; }
+      .home-trustbar, .home-services, .home-flow, .home-end { grid-template-columns:1fr; }
+      .home-trustbar span, .home-service, .home-flow div { border-right:0; border-bottom:1px solid var(--line); }
+      .home-end > div + div { border-left:0; border-top:1px solid var(--line); }
+      .home-nav a:not(.cta) { display:none; }
+      .homepage-step { grid-template-columns:56px 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior:auto; }
+      .reveal { opacity:1; transform:none; transition:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-progress" id="progress"></div>
+
+  <header>
+    <nav class="nav">
+      <a class="brand" href="#top">rocketpine.</a>
+      <div class="nav-center"><span>AGOL Worldwide</span><span>×</span><span>Research Direction</span></div>
+      <a class="nav-right" href="#homepage-structure">View homepage structure ↘</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-mark">A</div>
+      <div class="shell hero-inner">
+        <div class="eyebrow reveal">Research · Strategy · Website Direction · 2026</div>
+        <h1 class="reveal">Reframing <span class="outline">AGOL</span><br/>to be found<br/>and understood.</h1>
+        <div class="hero-bottom reveal">
+          <div class="hero-copy">A research-based website plan with two goals: help the right buyer find AGOL, then help them understand AGOL fast.</div>
+          <div class="hero-meta">Prepared by Rocket Pine<br/>U.S. market focus<br/>October 2026</div>
+        </div>
+      </div>
+      <div class="scroll-cue">Scroll to research</div>
+    </section>
+
+    <section class="section" id="objective">
+      <div class="shell">
+        <div class="objective-intro reveal">
+          <div class="section-label">[ 01 · Research objective ]</div>
+          <div>
+            <h2 class="section-title">The research had two jobs.</h2>
+            <p class="lead muted">This is not only about making the website look better. First, help the right buyer find AGOL. Second, make the business easy to understand in a few seconds.</p>
+          </div>
+        </div>
+
+        <div class="objective-grid reveal">
+          <article class="objective-card acid">
+            <div class="objective-no">Objective 01 · Visibility</div>
+            <h3>Get<br/>found.</h3>
+            <p>Find what buyers search for, then create the right service and industry pages so those searches can lead to AGOL.</p>
+          </article>
+          <article class="objective-card">
+            <div class="objective-no">Objective 02 · Understanding</div>
+            <h3>Get<br/>understood.</h3>
+            <p>Create a homepage and site structure that quickly explain what AGOL does, who it helps, why people should trust it and what to do next.</p>
+          </article>
+        </div>
+
+        <div class="research-path reveal">
+          <span>Search demand → SEO architecture → service pages</span>
+          <div class="path-line"></div>
+          <span>Homepage hierarchy → proof → conversion</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="opportunity">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 02 · What the research showed ]</div>
+          <div>
+            <h2 class="section-title">The current site makes the buyer work too hard before they even contact AGOL.</h2>
+            <p class="lead muted">This is more than a redesign. Search, clarity, trust and conversion all work together.</p>
+          </div>
+        </div>
+
+        <div class="grid-3 reveal">
+          <article class="finding">
+            <div class="num">01 — SEARCH / SECURITY</div>
+            <h3>The current site is not a strong base for growth.</h3>
+            <p>The audit found casino spam on 11 of 13 reviewed pages, plus indexing and technical issues. These problems must be fixed before we build a stronger SEO strategy.</p>
+          </article>
+          <article class="finding">
+            <div class="num">02 — CLARITY</div>
+            <h3>The buyer has to work too hard to understand AGOL.</h3>
+            <p>Time-Critical, Global Trade and Supply Chain are strong services, but the current site does not explain them in a simple order.</p>
+          </article>
+          <article class="finding">
+            <div class="num">03 — CONVERSION</div>
+            <h3>Ready-to-buy visitors can hit dead ends.</h3>
+            <p>Some quote, phone and email links do not work correctly. The new site should send each buyer to the right person or quote form.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-band">
+      <div class="shell reveal">
+        <p>A buyer under pressure should not have to investigate AGOL to understand AGOL.</p>
+      </div>
+    </section>
+
+    <section class="section" id="seo">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 03 · Objective 01 — Get found ]</div>
+          <div><h2 class="section-title">Search demand shows us which pages the website needs.</h2></div>
+        </div>
+
+        <div class="seo-topline reveal">
+          <p class="lead">Google Keyword Planner shows clear U.S. search demand for AGOL’s main services, especially IOR, DDP, AOG, OBC and urgent logistics.</p>
+          <div class="data-note">Source: Google Keyword Planner, United States, Sep 2025–Aug 2026. Search volume is an estimate. Google Ads “competition” is not the same as SEO difficulty.</div>
+        </div>
+
+        <div class="keyword-grid reveal">
+          <article class="keyword-card highlight"><span class="priority">High priority</span><div class="vol">5K</div><div class="unit">avg. monthly searches</div><h4>importer of record</h4></article>
+          <article class="keyword-card"><span class="priority">High priority</span><div class="vol">5K</div><div class="unit">avg. monthly searches</div><h4>ddp shipping</h4></article>
+          <article class="keyword-card"><span class="priority">High priority</span><div class="vol">5K</div><div class="unit">avg. monthly searches</div><h4>expedited freight services</h4></article>
+          <article class="keyword-card"><span class="priority">Service page</span><div class="vol">500</div><div class="unit">avg. monthly searches</div><h4>aog logistics</h4></article>
+          <article class="keyword-card"><span class="priority">Service page</span><div class="vol">500</div><div class="unit">avg. monthly searches</div><h4>on board courier</h4></article>
+          <article class="keyword-card"><span class="priority">Service page</span><div class="vol">500</div><div class="unit">avg. monthly searches</div><h4>exporter of record</h4></article>
+          <article class="keyword-card"><span class="priority">Industry opportunity</span><div class="vol">500</div><div class="unit">avg. monthly searches</div><h4>data center logistics</h4></article>
+          <article class="keyword-card"><span class="priority">Support topic</span><div class="vol">500</div><div class="unit">avg. monthly searches</div><h4>international trade compliance</h4></article>
+        </div>
+
+        <div class="callout reveal">
+          <b>SEO principle</b>
+          <p>We do not need one page for every keyword. We need one strong page for each main service or search need, supported by related industries and countries.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section architecture" id="architecture">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 04 · Information architecture ]</div>
+          <div>
+            <h2 class="section-title">The sitemap turns the research into a clear website structure.</h2>
+            <p class="lead muted">This is the main website map: simple top-level pages, clear service groups and more specific pages under each service.</p>
+          </div>
+        </div>
+
+        <div class="site-map-visual reveal" aria-label="AGOL conceptual website map">
+          <div class="site-map-home">HOME</div>
+          <div class="site-map-arrow">↓</div>
+
+          <div class="site-map-main">
+            <div class="site-map-main-node strong">Services</div>
+            <div class="site-map-main-node">Global Coverage</div>
+            <div class="site-map-main-node">Stories &amp; Reviews</div>
+            <div class="site-map-main-node">About</div>
+            <div class="site-map-main-node acid-node">Contact &amp; RFQ</div>
+          </div>
+
+          <div class="site-map-services-label">Services ↓</div>
+
+          <div class="site-map-service-groups">
+            <article class="site-map-group">
+              <div class="group-head">Time-Critical</div>
+              <div class="group-pages">
+                <span>Time-Critical Logistics</span>
+                <span>AOG / Aircraft on Ground</span>
+                <span>On-Board Courier / Hand Carry</span>
+                <span>Next Flight Out</span>
+                <span>Dedicated Ground</span>
+                <span>Air Charter</span>
+              </div>
+            </article>
+
+            <article class="site-map-group">
+              <div class="group-head">Global Trade</div>
+              <div class="group-pages">
+                <span>Global Trade</span>
+                <span>Importer of Record</span>
+                <span>Exporter of Record</span>
+                <span>Delivered Duty Paid</span>
+              </div>
+            </article>
+
+            <article class="site-map-group">
+              <div class="group-head">Supply Chain</div>
+              <div class="group-pages">
+                <span>Supply Chain Solutions</span>
+                <span>Miami Warehousing</span>
+                <span>Staging &amp; Consolidation</span>
+                <span>Reverse Logistics / RMA</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="site-map-support">
+            <div class="support-label">Supporting pages</div>
+            <div class="support-pages">
+              <span>Insights / Blog</span>
+              <span>FAQ</span>
+              <span>Careers</span>
+              <span>Vendor Registration</span>
+              <span>Employee Directory Submission</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout reveal">
+          <b>Scope note</b>
+          <p>This map shows the full structure we can grow into. It does not mean every service subpage must be part of phase one. We can choose the first pages based on priority, content and SEO value.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section homepage" id="homepage-structure">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 05 · Objective 02 — Get understood ]</div>
+          <div>
+            <h2 class="section-title">The homepage should answer the right questions, in the right order.</h2>
+            <p class="lead muted">This is not a design preview. It is the content order we recommend before we start visual design.</p>
+          </div>
+        </div>
+
+        <div class="homepage-logic reveal">
+          <article class="homepage-step">
+            <div class="step-no">01</div>
+            <div><h3>What does AGOL do?</h3><p>Explain Time-Critical Logistics and Global Trade clearly in the first screen.</p></div>
+          </article>
+          <article class="homepage-step">
+            <div class="step-no">02</div>
+            <div><h3>Why should I trust AGOL?</h3><p>Show real proof: certifications, operations, approved clients, reviews and success stories.</p></div>
+          </article>
+          <article class="homepage-step">
+            <div class="step-no">03</div>
+            <div><h3>What can AGOL help me with?</h3><p>Present the three service groups: Time-Critical, Global Trade and Supply Chain.</p></div>
+          </article>
+          <article class="homepage-step">
+            <div class="step-no">04</div>
+            <div><h3>Is this for a company like mine?</h3><p>Show the main industries: Aviation / AOG, Data Center &amp; IT / Telecom and Automotive.</p></div>
+          </article>
+          <article class="homepage-step">
+            <div class="step-no">05</div>
+            <div><h3>Where can AGOL help?</h3><p>Show coverage as proof, with the U.S., Mexico and LATAM as the main focus.</p></div>
+          </article>
+          <article class="homepage-step acid-step">
+            <div class="step-no">06</div>
+            <div><h3>What should I do next?</h3><p>Make Request a Quote easy to find, with a direct contact option for urgent needs.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section conversion" id="conversion">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 06 · Conversion system ]</div>
+          <div><h2 class="section-title">Different urgency. Different quote flow.</h2></div>
+        </div>
+
+        <div class="conversion-grid">
+          <div class="conversion-principles reveal">
+            <article class="principle"><span>01</span><div><h4>Persistent Request a Quote</h4><p>The primary conversion path should remain visible across the experience, without overwhelming the content.</p></div></article>
+            <article class="principle"><span>02</span><div><h4>Urgent shipment RFQ</h4><p>Origin, destination, ready time, deadline, pieces, weight / dimensions, commodity, DG and direct contact.</p></div></article>
+            <article class="principle"><span>03</span><div><h4>IOR / EOR RFQ</h4><p>Countries, commodity, value, recurring need, end user and compliance context — a different problem, so a different form.</p></div></article>
+            <article class="principle"><span>04</span><div><h4>Human access</h4><p>Call / WhatsApp can be prominent once operating hours and response commitments are verified internally.</p></div></article>
+          </div>
+
+          <div class="rfq-mock reveal">
+            <div class="rfq-top"><span>AGOL / RFQ</span><span>01 / 05</span></div>
+            <h3>What needs to move — and how fast?</h3>
+            <div class="form-line"><span>Origin</span><i>→</i></div>
+            <div class="form-line"><span>Destination</span><i>→</i></div>
+            <div class="form-line"><span>Ready date / time</span><i>→</i></div>
+            <div class="form-line"><span>Deadline</span><i>→</i></div>
+            <div class="form-line"><span>Shipment details</span><i>→</i></div>
+            <div class="rfq-btn"><span>Continue</span><span>↗</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="proof">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 07 · Trust system ]</div>
+          <div>
+            <h2 class="section-title">Trust should be visible, specific and real.</h2>
+            <p class="lead muted">For a serious logistics buyer, saying “we can handle it” is not enough. The website needs real proof.</p>
+          </div>
+        </div>
+
+        <div class="proof-grid reveal">
+          <article class="proof-item"><div class="tag">Capabilities</div><h3>Verified service proof.</h3><p>Only publish claims AGOL can prove: coverage, facilities, service availability and real capabilities.</p></article>
+          <article class="proof-item"><div class="tag">Credentials</div><h3>Certifications with context.</h3><p>Confirm IATA, CTPAT, TSA IAC and any other certifications before launch, then show them where they help build trust.</p></article>
+          <article class="proof-item"><div class="tag">Stories</div><h3>Real operations, not generic promises.</h3><p>Case studies, reviews and real shipment stories can answer a simple question: “Can AGOL handle my situation?”</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section competitive" id="competitive-landscape">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 08 · Competitive landscape ]</div>
+          <div>
+            <h2 class="section-title">Competitors show us what buyers already expect.</h2>
+            <p class="lead muted">We reviewed the competitors AGOL shared with us to see how they use service pages, proof and quote paths.</p>
+          </div>
+        </div>
+
+        <div class="benchmark-note reveal">Internal reference only · competitor names will not appear on the public AGOL website</div>
+
+        <div class="competitor-grid reveal">
+          <article class="competitor-card">
+            <small>Global Trade</small>
+            <h3>TecEx</h3>
+            <p>Clear IOR content, tools and quote paths make compliance easier to understand.</p>
+          </article>
+          <article class="competitor-card">
+            <small>Global Trade</small>
+            <h3>AeroDoc</h3>
+            <p>Country-specific IOR pages create more ways to be found in search.</p>
+          </article>
+          <article class="competitor-card">
+            <small>Time-Critical</small>
+            <h3>CNW</h3>
+            <p>Case studies and real operations help prove the company can handle urgent work.</p>
+          </article>
+          <article class="competitor-card">
+            <small>Time-Critical</small>
+            <h3>XPD Global</h3>
+            <p>Clear automotive and Mexico positioning makes its focus easy to understand.</p>
+          </article>
+        </div>
+
+        <div class="market-gap reveal">
+          <b>The opportunity</b>
+          <p>Most competitors focus more on either trade compliance or urgent logistics. AGOL can clearly show both together: <strong>compliance + time-critical execution, with one accountable team.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section buyer-journey" id="buyer-journey">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 08A · Buyer journey ]</div>
+          <div>
+            <h2 class="section-title">Not every buyer finds AGOL through Google. But the website still helps them decide if they trust AGOL.</h2>
+            <p class="lead muted">The brief shows two main paths: discovery and validation. The new website has to work for both.</p>
+          </div>
+        </div>
+
+        <div class="journey-grid-v3 reveal">
+          <article class="journey-path-v3">
+            <div class="type">Path 01 · Discovery</div>
+            <h3>They have a problem.<br/>They search for a solution.</h3>
+            <div class="journey-steps-v3">
+              <div class="journey-step-v3"><span>01</span><span>Google / organic search</span></div>
+              <div class="journey-step-v3"><span>02</span><span>Relevant service, industry or country page</span></div>
+              <div class="journey-step-v3"><span>03</span><span>Proof that AGOL can handle the situation</span></div>
+              <div class="journey-step-v3"><span>04</span><span>Request a quote / reach the right team</span></div>
+            </div>
+          </article>
+
+          <article class="journey-path-v3">
+            <div class="type">Path 02 · Validation</div>
+            <h3>They already know AGOL.<br/>Now they need confidence.</h3>
+            <div class="journey-steps-v3">
+              <div class="journey-step-v3"><span>01</span><span>Referral, relationship, outreach or LinkedIn</span></div>
+              <div class="journey-step-v3"><span>02</span><span>Search AGOL / open the homepage</span></div>
+              <div class="journey-step-v3"><span>03</span><span>Understand the services, proof, credentials and reach</span></div>
+              <div class="journey-step-v3"><span>04</span><span>Move forward with confidence</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section buyer-answers" id="buyer-questions">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 08B · Buyer questions → website answers ]</div>
+          <div>
+            <h2 class="section-title">The website should answer the questions buyers already have.</h2>
+            <p class="lead muted">These questions come directly from what AGOL hears in real sales conversations.</p>
+          </div>
+        </div>
+
+        <div class="answer-table reveal">
+          <div class="answer-row"><div class="question">“Are you big enough to handle this?”</div><div class="answer"><b>Show real proof.</b> Use credentials, facilities, real operations, case studies and approved customer proof instead of general claims.</div></div>
+          <div class="answer-row"><div class="question">“Do you really have coverage where I need it?”</div><div class="answer"><b>Show where AGOL can really operate.</b> Use clear coverage information and country details where they are verified.</div></div>
+          <div class="answer-row"><div class="question">“Can you handle the compliance side there?”</div><div class="answer"><b>Explain IOR / EOR in simple steps.</b> Show what AGOL handles, what the client provides and how the process works.</div></div>
+          <div class="answer-row"><div class="question">“Why not just use a large integrator?”</div><div class="answer"><b>Show the specialist advantage.</b> One team that connects compliance and urgent logistics is more specific than saying only “global logistics.”</div></div>
+          <div class="answer-row"><div class="question">“Will someone actually answer when it matters?”</div><div class="answer"><b>Make human contact easy.</b> Urgent buyers should reach the right team fast. Any 24/7 wording should use AGOL’s approved wording.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-questions" id="before-design">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 08C · Before we move into design ]</div>
+          <div>
+            <h2 class="section-title">Five final points — then we design.</h2>
+          </div>
+        </div>
+
+        <div class="question-list-v3 reveal">
+          <div class="question-v3"><div class="qno">01</div><p>How much importance should Mexico have on the homepage: key point, supporting proof, or mainly Global Coverage?</p></div>
+          <div class="question-v3"><div class="qno">02</div><p>Are the certifications on the current website up to date? Do you have any new ones?</p></div>
+          <div class="question-v3"><div class="qno">03</div><p>Which client logos, testimonials or success stories can we use publicly?</p></div>
+          <div class="question-v3"><div class="qno">04</div><p>What real photos or videos can we use? If needed, can we plan a new shoot?</p></div>
+          <div class="question-v3"><div class="qno">05</div><p>Please send the email or team for each RFQ type: Time-Critical and IOR / EOR.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section roadmap" id="roadmap">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div class="section-label">[ 09 · From research to design ]</div>
+          <div><h2 class="section-title">The research gives us the plan. Design is the next step.</h2></div>
+        </div>
+
+        <div class="roadmap-list reveal">
+          <article class="phase"><div class="n">01</div><h3>Finalize inputs</h3><p>Confirm the five final points: Mexico, certifications, approved proof, real images and RFQ routing.</p></article>
+          <article class="phase"><div class="n">02</div><h3>Design</h3><p>Turn the homepage structure and sitemap into the main Figma designs.</p></article>
+          <article class="phase"><div class="n">03</div><h3>Build</h3><p>Build the site in WordPress with reusable sections, technical SEO, responsive QA and good performance.</p></article>
+          <article class="phase"><div class="n">04</div><h3>Migrate safely</h3><p>Clean the old site, manage redirects, review indexing and keep only what is useful from the current domain.</p></article>
+          <article class="phase"><div class="n">05</div><h3>Measure & evolve</h3><p>Connect GA4, Search Console and CRM tracking so we can measure quote requests and future SEO growth.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="shell final-inner reveal">
+        <div class="section-label">[ Closing thought ]</div>
+        <h2>First get found. Then be instantly understood.</h2>
+        <div class="final-bottom">
+          <p>The new website should do two things well: bring the right buyer in, then give them clear information, proof and an easy next step.</p>
+          <div class="sig">Rocket Pine<br/>Research & digital direction<br/>2026</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const progress = document.getElementById('progress');
+    const updateProgress = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = total > 0 ? (window.scrollY / total) * 100 : 0;
+      progress.style.width = pct + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
